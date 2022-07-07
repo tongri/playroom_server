@@ -22,7 +22,7 @@ async def get_orders(
 
 
 @router.get("/admin/", response_model=Page[OrderOutAdmin])
-async def get_orders(
+async def get_admin_orders(
     page: PaginationParams = Depends(PaginationParams),
     db: AsyncSession = Depends(async_get_db),
     _=Depends(get_admin),
@@ -57,3 +57,8 @@ async def update_status(
     _=Depends(get_admin),
 ):
     return await OrderService(db).update_order(order_id, new_status.value)
+
+
+@router.get("/statistics/")
+async def get_statistics(db: AsyncSession = Depends(async_get_db)):
+    return await OrderService(db).get_statistics_by_device()

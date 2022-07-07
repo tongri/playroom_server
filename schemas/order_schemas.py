@@ -11,18 +11,18 @@ class OrderBase(BaseModel):
     session_time_end: datetime
     players: int
 
-    @validator("session_time_end", "session_time_start")
-    def validate_show_time_start_future(cls, v):
-        if not v.astimezone() > datetime.now().astimezone():
-            raise ValueError("Order can't be held in past")
-        return v
-
-    @root_validator
-    def check_session_times(cls, values):
-        start, end = values.get('session_time_start'), values.get('session_time_end')
-        if all([start, end]) and start >= end:
-            raise ValueError('Session beginning must be before end')
-        return values
+    # @validator("session_time_end", "session_time_start")
+    # def validate_show_time_start_future(cls, v):
+    #     if not v.astimezone() > datetime.now().astimezone():
+    #         raise ValueError("Order can't be held in past")
+    #     return v
+    #
+    # @root_validator
+    # def check_session_times(cls, values):
+    #     start, end = values.get('session_time_start'), values.get('session_time_end')
+    #     if all([start, end]) and start >= end:
+    #         raise ValueError('Session beginning must be before end')
+    #     return values
 
 
 class OrderIn(OrderBase):
@@ -33,6 +33,7 @@ class OrderOut(OrderBase):
     id: int
     play_device: PlayDeviceOut
     status: str
+    players: int
 
 
 class OrderOutAdmin(OrderBase):
@@ -40,3 +41,4 @@ class OrderOutAdmin(OrderBase):
     play_device: PlayDeviceOut
     user: UserPublic
     status: str
+    players: int

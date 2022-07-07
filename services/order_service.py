@@ -5,7 +5,7 @@ from crud.order_crud import (
     get_orders,
     insert_order,
     get_order_by_id,
-    delete_order, get_order_by_id_short, update_order_status, get_order_by_id_admin,
+    delete_order, get_order_by_id_short, update_order_status, get_order_by_id_admin, get_device_statistics,
 )
 from crud.play_device_crud import get_device_by_id
 from schemas.order_schemas import OrderIn
@@ -55,3 +55,6 @@ class OrderService(BaseService):
         await update_order_status(self.db, order_id, new_status)
         await self.db.commit()
         return await get_order_by_id_admin(self.db, order_id)
+
+    async def get_statistics_by_device(self):
+        return await get_device_statistics(self.db)

@@ -16,9 +16,10 @@ def prepare_sql(table_dict: dict) -> str:
 def create_tables():
     with local_session() as session:
         for table in all_tables:
-            print(f"Configuring table {table['name']}")
+            # print(f"Configuring table {table['name']}")
             command = prepare_sql(table)
-            session.execute(command)
+            print(command)
+            # session.execute(command)
         session.commit()
 
 
